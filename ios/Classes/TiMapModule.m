@@ -9,6 +9,7 @@
 #import "TiMapViewProxy.h"
 #import "TiMapIOS7ViewProxy.h"
 #import "TiMapCameraProxy.h"
+#import "TiMapDirectionsProxy.h"
 #import <MapKit/MapKit.h>
 
 @implementation TiMapModule
@@ -54,6 +55,15 @@
         return nil;
     }
     return [[[TiMapCameraProxy alloc] _initWithPageContext:[self pageContext] args:args] autorelease];
+}
+
+-(TiMapDirectionsProxy*)createDirections:(id)args
+{
+    if (![TiUtils isIOS7OrGreater]) {
+        [TiMapModule logAddedIniOS7Warning:@"createDirections()"];
+        return nil;
+    }
+    return [[[TiMapDirectionsProxy alloc] _initWithPageContext:[self pageContext] args:args] autorelease];
 }
 
 MAKE_SYSTEM_PROP(STANDARD_TYPE,MKMapTypeStandard);
