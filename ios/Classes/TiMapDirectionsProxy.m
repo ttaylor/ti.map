@@ -27,6 +27,7 @@
 {
     id source = [properties valueForKey:@"source"];
     id destination = [properties valueForKey:@"destination"];
+    id type = [properties valueForKey:@"type"];
     
     if (source != nil && destination != nil)
     {
@@ -41,9 +42,26 @@
         MKMapItem *sourceItem_ = [[MKMapItem alloc] initWithPlacemark:sourcePlacemark];
         MKMapItem *destinationItem_ = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
         
+        MKDirectionsTransportType *transportType_ = type;
+        switch (transportType_)
+        {
+            case MKDirectionsTransportTypeAutomobile:
+                self.type.text = @"Driving";
+            break;
+    
+            case MKDirectionsTransportTypeWalking:
+                self.type.text = @"Walking";
+            break;
+            
+            default:
+                self.type.text = @"Any";
+            break;
+        }
+        
         MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
         [request setSource:sourceItem_];
         [request setDestination:destinationItem_];
+        [request setTransportType:transportType_];
         
         MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
         [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error){
