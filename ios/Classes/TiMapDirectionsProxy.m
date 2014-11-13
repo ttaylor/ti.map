@@ -28,6 +28,7 @@
     id source = [properties valueForKey:@"source"];
     id destination = [properties valueForKey:@"destination"];
     id type = [properties valueForKey:@"type"];
+    id alternate = [properties valueForKey:@"requestsAlternateRoutes"];
     
     if (source != nil && destination != nil)
     {
@@ -62,6 +63,7 @@
         [request setSource:sourceItem_];
         [request setDestination:destinationItem_];
         [request setTransportType:transportType_];
+        [request setRequestsAlternateRoutes:alternate];
         
         MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
         [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error){
